@@ -1,10 +1,14 @@
 # RhythmoScope - Speech Rhythm Modulation Spectrum 
 
-<p align="center">
  RhythmoScope is a Python library for automatic speech rhythm modelisation. This project rely on the Envelope Modulation Spectrum (EMS) for analysing the main regularities of speech at different levels. This library is the result of my PhD thesis under the supervision of <a href="https://lnpl.univ-tlse2.fr/accueil/membres/corine-astesano-1">Corine Astésano</a> and <a href="https://www.irit.fr/~Jerome.Farinas/">Jérôme Farinas</a>. 
-</p>
 
 ## 🛠 Installation
+
+Rhythmoscope should work with Python 3.9 and above. The library can be installed through the following `pip` command:
+
+```sh
+pip install rhythmoscope
+```
 
 ## 🔗 Related work
 
