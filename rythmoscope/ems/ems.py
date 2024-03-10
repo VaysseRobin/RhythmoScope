@@ -1,6 +1,6 @@
-from rythmoscope.envelope import Envelope
+from rythmoscope.envelope import Envelope, LowPassEnvelope
 
 
 class EMS:
-    def __init__(self, Envelope: Envelope) -> None:
+    def __init__(self, Envelope: Envelope = LowPassEnvelope()) -> None:
         pass

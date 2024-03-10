@@ -11,8 +11,10 @@ class RhythmSpectrogram:
             sr (int): Sampling rate of the signal
             signal (npt.ArrayLike[int | float]): A one dimentional array containing the raw values
                                                  of the signal.
-                                                 
+
     """
 
-    def __init__(self, sr: int, signal: npt.ArrayLike[Union[int, float]], Envelope: Envelope) -> None:
+    def __init__(
+        self, sr: int, signal: npt.ArrayLike[Union[int, float]], Envelope: Envelope
+    ) -> None:
         pass
