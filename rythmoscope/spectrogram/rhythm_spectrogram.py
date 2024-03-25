@@ -15,6 +15,6 @@ class RhythmSpectrogram:
     """
 
     def __init__(
-        self, sr: int, signal: npt.ArrayLike[Union[int, float]], Envelope: Envelope
+        self, sr: int, signal: npt.NDArray, Envelope: Envelope
     ) -> None:
         pass

@@ -1,8 +1,9 @@
-from scipy.io import wavfile
+from scipy.io import wavfile # type: ignore
 import numpy as np
+from typing import Optional
 
 
-def load_wavfile(file: str, start: float = 0, end: float = None):
+def load_wavfile(file: str, start: float = 0, end: Optional[float] = None):
     """
     Utility function to load a wave audio file.
 

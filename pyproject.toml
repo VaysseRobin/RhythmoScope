@@ -4,7 +4,7 @@ version = "0.1.0"
 description = "Implementation of the Envelope modulation spectrum for speech rhythm analysis"
 authors = ["Vaysse Robin <robinvaysse@hotmail.fr>"]
 readme = "README.md"
-licence = "BSD-3-Clause"
+license = "BSD-3-Clause"
 
 [tool.poetry.dependencies]
 python = "^3.9"

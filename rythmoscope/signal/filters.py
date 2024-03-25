@@ -1,11 +1,11 @@
-from scipy.signal import butter, filtfilt
+from scipy.signal import butter, filtfilt # type: ignore
 import numpy.typing as npt
-from typing import Optional
+from typing import Optional, Union, List
 
 
 def butterworth_filter(
     sr: int,
-    signal: npt.ArrayLike[float],
+    signal: npt.NDArray,
     min_frequency: Optional[float] = None,
     max_frequency: Optional[float] = None,
     order: int = 3,
@@ -21,8 +21,8 @@ def butterworth_filter(
         filter_order (int): The order of the Butterworth filter
     """
     if min_frequency is not None and max_frequency is not None:
-        Ws = [min_frequency / (sr / 2), max_frequency / (sr / 2)]
-        filter_type = "bandpass"
+        Ws: Union[List, float] = [min_frequency / (sr / 2), max_frequency / (sr / 2)]
+        filter_type: str = "bandpass"
     elif max_frequency is not None:
         Ws = max_frequency / (sr / 2)
         filter_type = "lowpass"

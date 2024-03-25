@@ -10,7 +10,7 @@ class Envelope:
     Base class for an envelope extractor
     """
 
-    def filter(self, sr: int, signal: npt.ArrayLike[float]) -> npt.ArrayLike[float]:
+    def filter(self, sr: int, signal: npt.NDArray) -> npt.NDArray:
         raise NotImplementedError()
 
 
@@ -30,16 +30,16 @@ class LowPassEnvelope(Envelope):
 
     def __init__(
         self,
-        cut_frequency: float,
+        cut_frequency: float = 10,
         order: int = 3,
-        initial_bandpass: Tuple[int] = (300, 1000),
+        initial_bandpass: Tuple[float, float] = (300, 1000),
     ) -> None:
 
         self.cut_frequency = cut_frequency
         self.order = order
         self.initial_bandpass = initial_bandpass
 
-    def filter(self, sr: int, signal: npt.ArrayLike[float]) -> npt.ArrayLike[float]:
+    def filter(self, sr: int, signal: npt.NDArray) -> npt.NDArray:
         """
         Extract the envelope of a given signal
 
