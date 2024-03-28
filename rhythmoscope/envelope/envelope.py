@@ -5,7 +5,7 @@ from typing import Tuple
 from rhythmoscope.signal import butterworth_filter
 
 
-class Envelope:
+class BaseEnvelope:
     """
     Base class for an envelope extractor
     """
@@ -14,7 +14,7 @@ class Envelope:
         raise NotImplementedError()
 
 
-class LowPassEnvelope(Envelope):
+class LowPassEnvelope(BaseEnvelope):
     """
     Extract envelope of a signal by applying a bandpass Butterworth filter (default to 700Hz and
     1300Hz which correpond to p-centers frequencies (Cummins and Port 1998)), a low pass

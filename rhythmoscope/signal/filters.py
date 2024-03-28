@@ -1,4 +1,4 @@
-from scipy.signal import butter, filtfilt # type: ignore
+from scipy.signal import butter, filtfilt  # type: ignore
 import numpy.typing as npt
 from typing import Optional, Union, List
 
@@ -37,4 +37,3 @@ def butterworth_filter(
     b, a = butter(order, Ws, btype=filter_type)
     filtered_signal = filtfilt(b, a, signal)
     return filtered_signal
-

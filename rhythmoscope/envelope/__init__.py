@@ -1,3 +1,3 @@
-from .envelope import Envelope, LowPassEnvelope
+from .envelope import BaseEnvelope, LowPassEnvelope
 
-__all__ = ["Envelope", "LowPassEnvelope"]
+__all__ = ["BaseEnvelope", "LowPassEnvelope"]

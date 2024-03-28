@@ -1,4 +1,4 @@
-from scipy.io import wavfile # type: ignore
+from scipy.io import wavfile  # type: ignore
 import numpy as np
 from typing import Optional
 

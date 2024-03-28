@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "rhythmoscope"
-version = "0.0.1"
+version = "0.0.2"
 description = "Implementation of the Envelope modulation spectrum for speech rhythm analysis"
 authors = ["Vaysse Robin <robinvaysse@hotmail.fr>"]
 readme = "README.md"
@@ -12,7 +12,6 @@ numpy = "^1.26.4"
 scipy = "^1.12.0"
 pandas = "^2.2.1"
 plotly = "^5.19.0"
-matplotlib = "^3.8.3"
 
 
 [build-system]

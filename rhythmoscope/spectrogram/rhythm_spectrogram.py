@@ -1,7 +1,8 @@
 import numpy.typing as npt
 from typing import Union
 
-from rhythmoscope.envelope import Envelope
+from rhythmoscope.envelope import BaseEnvelope
+
 
 class RhythmSpectrogram:
     """
@@ -14,7 +15,5 @@ class RhythmSpectrogram:
 
     """
 
-    def __init__(
-        self, sr: int, signal: npt.NDArray, Envelope: Envelope
-    ) -> None:
+    def __init__(self, sr: int, signal: npt.NDArray, Envelope: BaseEnvelope) -> None:
         pass
