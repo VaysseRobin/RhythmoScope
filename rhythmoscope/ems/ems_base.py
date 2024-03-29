@@ -7,8 +7,7 @@ import plotly.graph_objects as go  # type: ignore
 
 class EMS:
     def __init__(
-        self, frequencies: npt.NDArray, ems: npt.NDArray, smoothing_window: int = 8
-    ) -> None:
+        self, frequencies: npt.NDArray, ems: npt.NDArray) -> None:
         """
         Object representation of an EMS object.
 
@@ -18,21 +17,26 @@ class EMS:
         self.frequencies = frequencies
         self.ems = ems
         self.l2_norm = np.sqrt(np.sum(ems**2))
-        self.smoothed_ems = self.update_smoothing(window_length=smoothing_window)
+        self.smoothing_window = int(len(ems) // 25)
+        self.smoothed_ems = None
+        self.update_smoothing(smoothing_window=self.smoothing_window)
 
-    def update_smoothing(self, window_length=8):
+    def update_smoothing(self, smoothing_window: int=8):
+        self.smoothing_window = smoothing_window
         rolling_mean = []
-        half_win = int(window_length / 2)
-        for i in range(half_win, len(self.ems) - half_win + 1, window_length):
+        half_win = int(smoothing_window / 2)
+        for i in range(half_win, len(self.ems) - half_win + 1, smoothing_window):
             rolling_mean.append(
-                sum(self.ems[i - half_win : i + half_win]) / window_length
+                sum(self.ems[i - half_win : i + half_win]) / smoothing_window
             )
 
-        frequencies = self.frequencies[::window_length][: len(rolling_mean)]
+        frequencies = np.insert(self.frequencies[::smoothing_window][: len(rolling_mean)], 0, [-0.1])
+        rolling_mean = np.insert(rolling_mean, 0, [0])
+        frequencies += 0.1
         interp = Akima1DInterpolator(frequencies, rolling_mean)
         smoothed_ems = interp(self.frequencies)
         adjusted_smoothed_ems = smoothed_ems * (max(self.ems) / max(smoothed_ems)) * 0.9
-        return adjusted_smoothed_ems
+        self.smoothed_ems = adjusted_smoothed_ems
 
     def energy_band(self, lower_bound: float, upper_bound: float) -> float:
         """
@@ -50,8 +54,9 @@ class EMS:
         energy = np.sum(self.ems[freq_list]) / self.l2_norm
         return energy
 
-    def ems_peaks(
+    def peaks(
         self,
+        on_smoothing: bool=True,
         n_peaks: int = 3,
         tol: float = 0.2,
         lower_bound: float = 0,
@@ -76,7 +81,11 @@ class EMS:
                 self.frequencies >= lower_bound, self.frequencies <= upper_bound
             )
         )[0]
-        magnitudes = self.ems[ids_freqs]
+        if on_smoothing:
+            magnitudes = self.smoothed_ems[ids_freqs]
+        else:
+            magnitudes = self.ems[ids_freqs]
+
         frequencies = self.frequencies[ids_freqs]
         peaks_idx, properties = find_peaks(
             magnitudes, distance=int(tol / freq_step), width=1, height=0.008
@@ -101,7 +110,7 @@ class EMS:
             )
 
     def plot(
-        self, plot_smoothing: bool = False, xlog: bool = False, saveplot: str = ""
+        self, plot_smoothing: bool = True, xlog: bool = False, saveplot: str = ""
     ):
 
         fig = go.Figure()
@@ -132,14 +141,12 @@ class EMS:
                     marker=dict(size=2),
                     hoverinfo="skip",
                     line=dict(width=5, dash="dash"),
-                ),
-                row=2,
-                col=1,
+                )
             )
 
         fig.update_layout(
             autosize=False,
-            width=1000,
+            width=1800,
             height=600,
             font=dict(size=22),
             plot_bgcolor="rgba(0,0,0,0)",
@@ -148,14 +155,11 @@ class EMS:
         fig.update_xaxes(gridcolor="grey", linewidth=2, linecolor="black")
         fig.update_yaxes(gridcolor="grey", linewidth=2, linecolor="black")
 
-        fig.update_xaxes(row=1, col=1, title_text="Time (sec)")
-        fig.update_xaxes(row=2, col=1, title_text="Frequency (Hz)")
+        fig.update_xaxes(title_text="Frequency (Hz)")
         if xlog:
             fig.update_xaxes(
                 type="log",
-                range=[np.log10(self.frequencies[0] + 0.0001), np.log10(self.frequencies[-1])],
-                row=2,
-                col=1,
+                range=[np.log10(self.frequencies[0] + 0.0001), np.log10(self.frequencies[-1])]
             )
 
         if saveplot:

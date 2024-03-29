@@ -6,6 +6,7 @@ from scipy.signal import resample  # type: ignore
 
 from rhythmoscope.envelope import BaseEnvelope, LowPassEnvelope
 from rhythmoscope.signal import load_wavfile
+from rhythmoscope import ems as ems_module
 
 
 class EMSExtractor:
@@ -47,7 +48,8 @@ class EMSExtractor:
                                              the file. Defaults to None.
         """
         time, signal, sr = load_wavfile(file, start, end)
-        freqs, ems = self._extract_ems(sr, signal)
+        frequencies, ems = self._extract_ems(sr, signal)
+        return ems_module.EMS(frequencies=frequencies, ems=ems)
 
     def from_signal(self, sr: int, signal: Union[List, npt.NDArray]):
         """
@@ -57,7 +59,8 @@ class EMSExtractor:
             sr (int): Sampling rate of the signal
             signal (npt.NDArray): Raw data from the signal waveform. This should be
         """
-        freqs, ems = self._extract_ems(sr, signal)
+        frequencies, ems = self._extract_ems(sr, signal)
+        return ems_module.EMS(frequencies=frequencies, ems=ems)
 
     def _extract_ems(
         self, sr: int, signal: Union[List, npt.NDArray], normalize: bool = True
