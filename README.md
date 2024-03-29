@@ -15,17 +15,19 @@ pip install rhythmoscope
 As an example, we'll extract and plot the EMS of a speech signal from a .wav file:
 
 ```python
->>> from rhythmoscope.ems import EMSExtractor
->>> from rhythmoscope.envelope import LowPassEnvelope
+from rhythmoscope.ems import EMSExtractor
+from rhythmoscope.envelope import LowPassEnvelope
 
->>> Envelope = LowPassEnvelope(cut_frequency=10, order=3, initial_bandpass=(300, 1000)) # Define envelope extractor
->>> Extractor = EMSExtractor(Envelope=Envelope, min_freq=0, max_freq=10) # Define EMS extractor parameters
+Envelope = LowPassEnvelope(cut_frequency=10, order=3, initial_bandpass=(300, 1000)) # Define envelope extractor
+Extractor = EMSExtractor(Envelope=Envelope, min_freq=0, max_freq=10) # Define EMS extractor parameters
 
->>> EMS = Extractor.from_file("example.wav", start=0, end=4) # Extract EMS on the first 4 seconds of the audio
+EMS = Extractor.from_file("example.wav", start=0, end=4) # Extract EMS on the first 4 seconds of the audio
 
->>> fig = EMS.plot()
->>> fig.show()
+fig = EMS.plot()
+fig.show()
 ```
+
+It produce the following output which represent the Envelope Modulation Spectrum of a signal:
 
 <div align="center">
     <img src="docs/img/EMS_example.png" alt="EMS_example" width="90%" vspace="5">
