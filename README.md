@@ -14,7 +14,9 @@ Rhythmoscope should work with Python 3.9 and above. The library can be installed
 ```sh
 pip install rhythmoscope
 ```
-## 🔬 Usage
+## 🔬 Basic usage
+
+As an example, we'll extract and plot the EMS of a speech signal from a .wav file:
 
 ```python
 >>> from rhythmoscope.ems import EMSExtractor
@@ -23,7 +25,7 @@ pip install rhythmoscope
 >>> Envelope = LowPassEnvelope(cut_frequency=10, order=3, initial_bandpass=(300, 1000)) # Define envelope extractor
 >>> Extractor = EMSExtractor(Envelope=Envelope, min_freq=0, max_freq=10) # Define EMS extractor parameters
 
->>> EMS = Extractor.from_file("example.wav", start=0, end=5) # Extract EMS on the 5 first seconds of the audio
+>>> EMS = Extractor.from_file("example.wav", start=0, end=4) # Extract EMS on the first 4 seconds of the audio
 
 >>> fig = EMS.plot()
 >>> fig.show()
