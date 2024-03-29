@@ -16,7 +16,7 @@ class EMSExtractor:
         Envelope: BaseEnvelope = LowPassEnvelope(),
         min_freq: float = 0,
         max_freq: float = 10,
-        n_fft: int = 2048,
+        n_fft: int = 1024,
         tukey_alpha: float = 0.2,
     ) -> None:
         """
@@ -72,6 +72,7 @@ class EMSExtractor:
         envelope = self.envelope.filter(sr, signal)
         # Apply a Tukey window
         envelope = envelope * tukey(len(envelope), self.tukey_alpha)
+        envelope_nrj = np.sqrt(np.sum(envelope**2))
         # Downsample to 100 Hz for faster computation
         downsampled_sr = 100
         envelope = resample(envelope, int(downsampled_sr * (len(envelope) / sr)))
@@ -81,7 +82,7 @@ class EMSExtractor:
         # Compute the energy of all the signal to normalize the EMS values. The energy obtained
         # is the same as computing the one in frequency domain (Parceval theorem)
         if normalize:
-            ems /= np.sqrt(np.sum(envelope**2))
+            ems /= envelope_nrj
         return frequencies, ems
 
     def _extract_spectrum(self, sr: int, signal: npt.NDArray):
