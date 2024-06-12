@@ -25,7 +25,7 @@ class RhythmSpectrogram:
         freq_range: Optional[Tuple] = None,
         log_spectrogram: bool = False,
         ylog: Optional[bool] = False,
-        saveplot: str = "",
+        savefig: str = "",
     ):
         if time_range is not None:
             ids_time = np.where(
@@ -63,6 +63,6 @@ class RhythmSpectrogram:
         plt.ylabel("Frequency (Hz)")
         plt.xlabel("Time (s)")
 
-        if saveplot:
-            plt.savefig(saveplot)
+        if savefig:
+            plt.savefig(savefig)
         return fig
