@@ -47,7 +47,7 @@ class RhythmSpectrogram:
             spectrogram = np.sqrt(self.spectrogram)
         else:
             spectrogram = self.spectrogram
-        fig = plt.figure()
+        fig = plt.figure(figsize=(12, 6))
         plt.pcolormesh(
             self.times[ids_time[0] : ids_time[-1]],
             self.frequencies[ids_freqs[0] : ids_freqs[-1]],
