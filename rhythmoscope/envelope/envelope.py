@@ -3,15 +3,7 @@ import numpy.typing as npt
 from typing import Tuple
 
 from rhythmoscope.signal import butterworth_filter
-
-
-class BaseEnvelope:
-    """
-    Base class for an envelope extractor
-    """
-
-    def filter(self, sr: int, signal: npt.NDArray) -> npt.NDArray:
-        raise NotImplementedError()
+from .base import BaseEnvelope
 
 
 class LowPassEnvelope(BaseEnvelope):

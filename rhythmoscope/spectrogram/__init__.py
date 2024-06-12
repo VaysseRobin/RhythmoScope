@@ -1,3 +1,4 @@
-from .rhythm_spectrogram import RhythmSpectrogram
+from .rhythm_spectrogram import RhythmSpectrogramExtractor
+from .base import RhythmSpectrogram
 
-__all__ = ["RhythmSpectrogram"]
+__all__ = ["RhythmSpectrogram", "RhythmSpectrogramExtractor"]

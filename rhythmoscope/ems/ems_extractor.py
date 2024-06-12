@@ -1,4 +1,4 @@
-from typing import Optional, Tuple, Union, List
+from typing import Optional, Tuple, Union, List, Type
 import numpy as np
 import numpy.typing as npt
 from scipy.signal.windows import tukey  # type: ignore
@@ -36,7 +36,9 @@ class EMSExtractor:
         self.max_freq = max_freq
         self.n_fft = n_fft
 
-    def from_file(self, file: str, start: float = 0, end: Optional[float] = None):
+    def from_file(
+        self, file: str, start: float = 0, end: Optional[float] = None
+    ):
         """
         Extract EMS from a .wav file
 

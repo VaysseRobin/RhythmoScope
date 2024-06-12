@@ -6,8 +6,7 @@ import plotly.graph_objects as go  # type: ignore
 
 
 class EMS:
-    def __init__(
-        self, frequencies: npt.NDArray, ems: npt.NDArray) -> None:
+    def __init__(self, frequencies: npt.NDArray, ems: npt.NDArray) -> None:
         """
         Object representation of an EMS object.
 
@@ -21,7 +20,7 @@ class EMS:
         self.smoothed_ems = None
         self.update_smoothing(smoothing_window=self.smoothing_window)
 
-    def update_smoothing(self, smoothing_window: int=8):
+    def update_smoothing(self, smoothing_window: int = 8):
         self.smoothing_window = smoothing_window
         rolling_mean = []
         half_win = int(smoothing_window / 2)
@@ -30,7 +29,9 @@ class EMS:
                 sum(self.ems[i - half_win : i + half_win]) / smoothing_window
             )
 
-        frequencies = np.insert(self.frequencies[::smoothing_window][: len(rolling_mean)], 0, [-0.1])
+        frequencies = np.insert(
+            self.frequencies[::smoothing_window][: len(rolling_mean)], 0, [-0.1]
+        )
         rolling_mean = np.insert(rolling_mean, 0, [0])
         frequencies += 0.1
         interp = Akima1DInterpolator(frequencies, rolling_mean)
@@ -56,7 +57,7 @@ class EMS:
 
     def peaks(
         self,
-        on_smoothing: bool=True,
+        on_smoothing: bool = True,
         n_peaks: int = 3,
         tol: float = 0.2,
         lower_bound: float = 0,
@@ -109,9 +110,7 @@ class EMS:
                 "invalid value for 'sort_by' parameter, must be either 'magnitude' or 'frequency'"
             )
 
-    def plot(
-        self, plot_smoothing: bool = True, xlog: bool = False, saveplot: str = ""
-    ):
+    def plot(self, plot_smoothing: bool = True, xlog: bool = False, saveplot: str = ""):
 
         fig = go.Figure()
         fig.add_trace(
@@ -159,7 +158,10 @@ class EMS:
         if xlog:
             fig.update_xaxes(
                 type="log",
-                range=[np.log10(self.frequencies[0] + 0.0001), np.log10(self.frequencies[-1])]
+                range=[
+                    np.log10(self.frequencies[0] + 0.0001),
+                    np.log10(self.frequencies[-1]),
+                ],
             )
 
         if saveplot:
